@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hm_shop/api/home.dart';
 import 'package:hm_shop/components/Home/HMSuggestion.dart';
 import 'package:hm_shop/components/Home/HmCategory.dart';
 import 'package:hm_shop/components/Home/HmHot.dart';
@@ -15,21 +16,21 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<BannerItem> _bannerList = [
-    BannerItem(
-      id: "1",
-      imgUrl:
-          "https://aihanguo.oss-cn-beijing.aliyuncs.com/一手托腮美女白鹿2K电脑壁纸_彼岸壁纸.jpg",
-    ),
-    BannerItem(
-      id: "2",
-      imgUrl:
-          "https://aihanguo.oss-cn-beijing.aliyuncs.com/校园清纯美女田曦薇2K高清电脑壁纸_彼岸壁纸.jpg",
-    ),
-    BannerItem(
-      id: "3",
-      imgUrl:
-          "https://aihanguo.oss-cn-beijing.aliyuncs.com/长发侧脸美女孟子义2K超清壁纸_彼岸壁纸.jpg",
-    ),
+    // BannerItem(
+    //   id: "1",
+    //   imgUrl:
+    //       "https://aihanguo.oss-cn-beijing.aliyuncs.com/一手托腮美女白鹿2K电脑壁纸_彼岸壁纸.jpg",
+    // ),
+    // BannerItem(
+    //   id: "2",
+    //   imgUrl:
+    //       "https://aihanguo.oss-cn-beijing.aliyuncs.com/校园清纯美女田曦薇2K高清电脑壁纸_彼岸壁纸.jpg",
+    // ),
+    // BannerItem(
+    //   id: "3",
+    //   imgUrl:
+    //       "https://aihanguo.oss-cn-beijing.aliyuncs.com/长发侧脸美女孟子义2K超清壁纸_彼岸壁纸.jpg",
+    // ),
   ];
   List<Widget> _getSrcollChildren() {
     return [
@@ -55,6 +56,18 @@ class _HomeViewState extends State<HomeView> {
       SliverToBoxAdapter(child: SizedBox(height: 10)),
       Hmmorelist(),
     ];
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getBannerList();
+  }
+
+  void _getBannerList() async {
+    _bannerList = await getBannerListApi();
+    setState(() {});
   }
 
   @override
