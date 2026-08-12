@@ -15,3 +15,10 @@ Future<List<categoryItem>> getCategoryApi() async {
     return categoryItem.fromJson(item as Map<String, dynamic>);
   }).toList();
 }
+
+// 特惠推荐
+Future<SpecialRecommend> getProductListApi() async {
+  return SpecialRecommend.fromJson(
+    await dioRequest.get(HttpConstants.PRODUCT_lIST),
+  );
+}
