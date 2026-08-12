@@ -20,6 +20,18 @@ class _HomeViewState extends State<HomeView> {
     title: ' ',
     subTypes: [],
   );
+  // 爆款推荐数据列表
+  SpecialRecommend _HotList = SpecialRecommend(
+    id: ' ',
+    title: ' ',
+    subTypes: [],
+  );
+  // 一站式全买列表
+  SpecialRecommend _allList = SpecialRecommend(
+    id: ' ',
+    title: ' ',
+    subTypes: [],
+  );
   List<categoryItem> _categoryList = [];
   List<BannerItem> _bannerList = [
     // BannerItem(
@@ -54,9 +66,13 @@ class _HomeViewState extends State<HomeView> {
           child: Flex(
             direction: Axis.horizontal,
             children: [
-              Expanded(child: Hmhot()),
+              Expanded(
+                child: Hmhot(result: _HotList, type: "hot"),
+              ),
               SizedBox(width: 10),
-              Expanded(child: Hmhot()),
+              Expanded(
+                child: Hmhot(result: _allList, type: "step"),
+              ),
             ],
           ),
         ),
@@ -73,6 +89,8 @@ class _HomeViewState extends State<HomeView> {
     _getBannerList();
     _getCategoryList();
     _getProductList();
+    _getHotlist();
+    _getAlllist();
   }
 
   void _getBannerList() async {
@@ -87,6 +105,16 @@ class _HomeViewState extends State<HomeView> {
 
   void _getProductList() async {
     _specialRecommend = await getProductListApi();
+    setState(() {});
+  }
+
+  void _getHotlist() async {
+    _HotList = await getInvorgeApi();
+    setState(() {});
+  }
+
+  void _getAlllist() async {
+    _allList = await getAllApi();
     setState(() {});
   }
 

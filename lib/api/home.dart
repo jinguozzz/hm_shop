@@ -22,3 +22,17 @@ Future<SpecialRecommend> getProductListApi() async {
     await dioRequest.get(HttpConstants.PRODUCT_lIST),
   );
 }
+
+// 爆款推荐
+Future<SpecialRecommend> getInvorgeApi() async {
+  return SpecialRecommend.fromJson(
+    await dioRequest.get(HttpConstants.STUGGENT_LIST),
+  );
+}
+
+// 一站式全买
+Future<SpecialRecommend> getAllApi() async {
+  return SpecialRecommend.fromJson(
+    await dioRequest.get(HttpConstants.ALLSHOP_LIST),
+  );
+}
