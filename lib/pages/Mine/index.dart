@@ -26,17 +26,24 @@ class _MineViewState extends State<MineView> {
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundImage: const AssetImage('lib/assets/goods_avatar.png'),
+            backgroundImage: const AssetImage(
+              'lib/assets/tab/goods_avatar.png',
+            ),
             backgroundColor: Colors.white,
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  '立即登录',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/Login');
+                  },
+                  child: Text(
+                    '立即登录',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
                 ),
               ],
             ),
