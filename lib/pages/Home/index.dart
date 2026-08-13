@@ -5,6 +5,7 @@ import 'package:hm_shop/components/Home/HmCategory.dart';
 import 'package:hm_shop/components/Home/HmHot.dart';
 import 'package:hm_shop/components/Home/HmMoreList.dart';
 import 'package:hm_shop/components/Home/HmSlider.dart';
+import 'package:hm_shop/utils/ToastUtils.dart';
 import 'package:hm_shop/viewmodels/home.dart';
 
 class HomeView extends StatefulWidget {
@@ -59,7 +60,7 @@ class _HomeViewState extends State<HomeView> {
   bool _hasMore = true;
 
   // 获取推荐列表
-  void _getRecommendList() async {
+  Future<void> _getRecommendList() async {
     if (isLoading || !_hasMore) return;
     isLoading = true;
     int requestLimit = _page * 8;
@@ -127,38 +128,55 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
-  void _getBannerList() async {
+  Future<void> _getBannerList() async {
     _bannerList = await getBannerListApi();
     setState(() {});
   }
 
-  void _getCategoryList() async {
+  Future<void> _getCategoryList() async {
     _categoryList = await getCategoryApi();
     setState(() {});
   }
 
-  void _getProductList() async {
+  Future<void> _getProductList() async {
     _specialRecommend = await getProductListApi();
     setState(() {});
   }
 
-  void _getHotlist() async {
+  Future<void> _getHotlist() async {
     _HotList = await getInvorgeApi();
     setState(() {});
   }
 
-  void _getAlllist() async {
+  Future<void> _getAlllist() async {
     _allList = await getAllApi();
     setState(() {});
   }
 
   final ScrollController _controller = ScrollController();
 
+  Future<void> _onFrensh() async {
+    print('111111111111111');
+    _page = 1;
+    _hasMore = true;
+    isLoading = false;
+    await _getBannerList();
+    await _getCategoryList();
+    await _getProductList();
+    await _getHotlist();
+    await _getAlllist();
+    await _getRecommendList();
+    Toastutils.showToast(context, '亲 , 刷新成功');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: _getSrcollChildren(),
-      controller: _controller, //绑定控制器
+    return RefreshIndicator(
+      onRefresh: _onFrensh,
+      child: CustomScrollView(
+        slivers: _getSrcollChildren(),
+        controller: _controller, //绑定控制器
+      ),
     );
   }
 }
