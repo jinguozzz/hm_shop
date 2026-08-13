@@ -10,4 +10,5 @@ class HttpConstants {
   static const String PRODUCT_lIST = "/hot/preference";
   static const String STUGGENT_LIST = "/hot/inVogue";
   static const String ALLSHOP_LIST = "/hot/onestop";
+  static const String RECOMMEND_LIST = "/home/recommend"; // 推荐列表
 }

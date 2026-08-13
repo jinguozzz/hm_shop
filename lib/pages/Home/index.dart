@@ -50,6 +50,29 @@ class _HomeViewState extends State<HomeView> {
     //       "https://aihanguo.oss-cn-beijing.aliyuncs.com/长发侧脸美女孟子义2K超清壁纸_彼岸壁纸.jpg",
     // ),
   ];
+
+  // 推荐列表
+  List<GoodDetailItem> _recommendList = [];
+
+  int _page = 1; //页码
+  bool isLoading = false;
+  bool _hasMore = true;
+
+  // 获取推荐列表
+  void _getRecommendList() async {
+    if (isLoading || !_hasMore) return;
+    isLoading = true;
+    int requestLimit = _page * 8;
+    _recommendList = await getRecommendListAPI({"limit": requestLimit});
+    isLoading = false;
+    setState(() {});
+    _page++;
+    if (_recommendList.length < requestLimit) {
+      _hasMore = false;
+      return;
+    }
+  }
+
   List<Widget> _getSrcollChildren() {
     return [
       SliverToBoxAdapter(child: Hmslider(bannerList: _bannerList)),
@@ -78,7 +101,7 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       SliverToBoxAdapter(child: SizedBox(height: 10)),
-      Hmmorelist(),
+      HmMoreList(recommendList: _recommendList),
     ];
   }
 
@@ -91,6 +114,17 @@ class _HomeViewState extends State<HomeView> {
     _getProductList();
     _getHotlist();
     _getAlllist();
+    _getRecommendList();
+    _requestEvent();
+  }
+
+  void _requestEvent() {
+    _controller.addListener(() {
+      if (_controller.position.pixels >=
+          _controller.position.maxScrollExtent - 50) {
+        _getRecommendList();
+      }
+    });
   }
 
   void _getBannerList() async {
@@ -118,8 +152,13 @@ class _HomeViewState extends State<HomeView> {
     setState(() {});
   }
 
+  final ScrollController _controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: _getSrcollChildren());
+    return CustomScrollView(
+      slivers: _getSrcollChildren(),
+      controller: _controller, //绑定控制器
+    );
   }
 }
