@@ -168,3 +168,36 @@ class GoodDetailItem extends GoodsItem {
     );
   }
 }
+
+class GoodsDetailsItems {
+  int counts;
+  int pageSize;
+  int pages;
+  int page;
+  List<GoodDetailItem> items;
+
+  GoodsDetailsItems({
+    this.counts = 0,
+    this.pageSize = 10,
+    this.pages = 0,
+    this.page = 1,
+    this.items = const [],
+  });
+
+  factory GoodsDetailsItems.fromJson(Map<String, dynamic> json) {
+    return GoodsDetailsItems(
+      counts: json['counts'] ?? 0,
+      pageSize: json['pageSize'] ?? 10,
+      pages: json['pages'] ?? 0,
+      page: json['page'] ?? 1,
+      items: json['items'] == null
+          ? []
+          : (json['items'] as List)
+                .map(
+                  (item) =>
+                      GoodDetailItem.formJSON(item as Map<String, dynamic>),
+                )
+                .toList(),
+    );
+  }
+}
