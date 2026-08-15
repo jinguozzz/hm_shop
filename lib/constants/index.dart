@@ -12,4 +12,5 @@ class HttpConstants {
   static const String ALLSHOP_LIST = "/hot/oneStop";
   static const String RECOMMEND_LIST = "/home/recommend"; // 推荐列表
   static const String GUESS_LIST = "/home/goods/guessLike";
+  static const String lOGIN = "/login"; //登录请求类型
 }
